@@ -48,4 +48,3 @@ export class RegisterComponent {
     });
   }
 }
-export { RegisterComponent };

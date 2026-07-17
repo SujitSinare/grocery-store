@@ -84,7 +84,7 @@ export class InventoryComponent implements OnInit {
     const item = this.selectedItem();
     if (!item) return;
 
-    this.http.patch(`inventory/${item.productId._id}/adjust`, {
+    this.http.patch(`inventory/${item._id}/adjust`, {
       qty: this.adjustQty,
       reason: this.adjustReason
     }).subscribe({
@@ -95,4 +95,3 @@ export class InventoryComponent implements OnInit {
     });
   }
 }
-export { InventoryComponent };

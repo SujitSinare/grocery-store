@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
         this.metrics.set(data.metrics);
         this.recentOrders.set(data.recentOrders || []);
         this.chartData.set(data.chartData || []);
-        
+
         // Load low stock items from inventory
         this.loadLowStock();
       }
@@ -62,4 +62,3 @@ export class DashboardComponent implements OnInit {
     return Math.min((revenue / maxVal) * 200, 200); // Scale to 200px max height
   }
 }
-export { DashboardComponent };

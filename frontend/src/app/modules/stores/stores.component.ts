@@ -70,4 +70,3 @@ export class StoresComponent implements OnInit {
     });
   }
 }
-export { StoresComponent };

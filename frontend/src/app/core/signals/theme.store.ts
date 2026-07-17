@@ -12,7 +12,7 @@ export class ThemeStore {
     effect(() => {
       const currentTheme = this.theme();
       localStorage.setItem('theme', currentTheme);
-      
+
       const root = document.documentElement;
       if (currentTheme === 'dark') {
         root.classList.add('dark');
@@ -30,4 +30,3 @@ export class ThemeStore {
     this.theme.set(theme);
   }
 }
-export { ThemeStore };

@@ -140,7 +140,7 @@ export class PosComponent implements OnInit {
     this.http.post<any>('orders', body).subscribe({
       next: order => {
         this.checkoutLoading = false;
-        
+
         if (this.paymentMethod() === 'upi') {
           this.activePayment.set(null);
           // Request dynamic UPI QR
@@ -205,4 +205,3 @@ export class PosComponent implements OnInit {
     this.loadCatalog();
   }
 }
-export { PosComponent };

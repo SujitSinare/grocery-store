@@ -105,15 +105,15 @@
       <div class="space-y-2">
         <label class="block text-xs font-semibold uppercase tracking-wider text-gray-500">Payment Channel</label>
         <div class="grid grid-cols-3 gap-3">
-          <button (click)="paymentMethod.set('cash')" [class.border-green-500]="paymentMethod() === 'cash'" [class.bg-green-500/5]="paymentMethod() === 'cash'" class="p-3 border border-gray-200 dark:border-gray-855 rounded-xl font-bold flex flex-col items-center gap-1 transition-all duration-150">
+          <button (click)="paymentMethod.set('cash')" [ngClass]="{ 'border-green-500 bg-green-500/5': paymentMethod() === 'cash' }" class="p-3 border border-gray-200 dark:border-gray-855 rounded-xl font-bold flex flex-col items-center gap-1 transition-all duration-150">
             <span class="material-icons text-green-500">payments</span>
             <span class="text-xs">Cash Payment</span>
           </button>
-          <button (click)="paymentMethod.set('upi')" [class.border-green-500]="paymentMethod() === 'upi'" [class.bg-green-500/5]="paymentMethod() === 'upi'" class="p-3 border border-gray-200 dark:border-gray-855 rounded-xl font-bold flex flex-col items-center gap-1 transition-all duration-150">
+          <button (click)="paymentMethod.set('upi')" [ngClass]="{ 'border-green-500 bg-green-500/5': paymentMethod() === 'upi' }" class="p-3 border border-gray-200 dark:border-gray-855 rounded-xl font-bold flex flex-col items-center gap-1 transition-all duration-150">
             <span class="material-icons text-blue-500">qr_code</span>
             <span class="text-xs">Dynamic UPI</span>
           </button>
-          <button (click)="paymentMethod.set('card')" [class.border-green-500]="paymentMethod() === 'card'" [class.bg-green-500/5]="paymentMethod() === 'card'" class="p-3 border border-gray-200 dark:border-gray-855 rounded-xl font-bold flex flex-col items-center gap-1 transition-all duration-150">
+          <button (click)="paymentMethod.set('card')" [ngClass]="{ 'border-green-500 bg-green-500/5': paymentMethod() === 'card' }" class="p-3 border border-gray-200 dark:border-gray-855 rounded-xl font-bold flex flex-col items-center gap-1 transition-all duration-150">
             <span class="material-icons text-yellow-500">credit_card</span>
             <span class="text-xs">Card Swipe</span>
           </button>

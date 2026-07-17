@@ -142,7 +142,10 @@
               <td class="py-3 px-4 capitalize font-semibold">{{ order.orderType }}</td>
               <td class="py-3 px-4 capitalize">{{ order.paymentMethod }}</td>
               <td class="py-3 px-4">
-                <span [class.bg-green-500/10]="order.paymentStatus === 'paid'" [class.text-green-500]="order.paymentStatus === 'paid'" [class.bg-yellow-500/10]="order.paymentStatus === 'pending'" [class.text-yellow-600]="order.paymentStatus === 'pending'" class="px-2 py-1 rounded-full text-xs font-bold uppercase">
+                <span [ngClass]="{
+                  'bg-green-500/10 text-green-500': order.paymentStatus === 'paid',
+                  'bg-yellow-500/10 text-yellow-600': order.paymentStatus === 'pending'
+                }" class="px-2 py-1 rounded-full text-xs font-bold uppercase">
                   {{ order.paymentStatus }}
                 </span>
               </td>

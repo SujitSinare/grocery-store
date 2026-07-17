@@ -14,4 +14,3 @@ export class SettingsComponent {
   themeStore = inject(ThemeStore);
   authStore = inject(AuthStore);
 }
-export { SettingsComponent };

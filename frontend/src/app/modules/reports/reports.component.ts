@@ -32,4 +32,3 @@ export class ReportsComponent {
     });
   }
 }
-export { ReportsComponent };

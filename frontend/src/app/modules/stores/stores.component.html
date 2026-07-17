@@ -48,7 +48,10 @@
         <div class="space-y-3">
           <div class="flex justify-between items-start">
             <h4 class="font-bold text-xl text-gray-800 dark:text-gray-100">{{ store.name }}</h4>
-            <span [class.bg-green-500/10]="store.isActive" [class.text-green-600]="store.isActive" [class.bg-red-500/10]="!store.isActive" [class.text-red-500]="!store.isActive" class="px-2 py-1 rounded-full text-xs font-bold uppercase">
+            <span [ngClass]="{
+              'bg-green-500/10 text-green-600': store.isActive,
+              'bg-red-500/10 text-red-500': !store.isActive
+            }" class="px-2 py-1 rounded-full text-xs font-bold uppercase">
               {{ store.isActive ? 'Active' : 'Disabled' }}
             </span>
           </div>

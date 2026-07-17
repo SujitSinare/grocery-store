@@ -83,4 +83,4 @@ export class AuthStore {
     }
   }
 }
-export { UserProfile, AuthStore };
+export { UserProfile };

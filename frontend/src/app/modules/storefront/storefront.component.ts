@@ -119,7 +119,7 @@ export class StorefrontComponent implements OnInit {
         this.showUpiOverlay.set(false);
         this.cartStore.clear();
         alert('Order placed and paid successfully!');
-        
+
         // Open PDF invoice
         this.http.get<any>(`invoices/order/${pay.orderId}`).subscribe({
           next: inv => {
@@ -137,4 +137,3 @@ export class StorefrontComponent implements OnInit {
     this.cartStore.clear();
   }
 }
-export { StorefrontComponent };
