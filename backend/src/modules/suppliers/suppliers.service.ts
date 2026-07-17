@@ -42,4 +42,3 @@ export class SuppliersService {
     }
   }
 }
-export { SuppliersService };

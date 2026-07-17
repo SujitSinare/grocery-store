@@ -44,4 +44,3 @@ export class CustomersService {
     return customer.save();
   }
 }
-export { CustomersService };

@@ -34,7 +34,7 @@ import { SeedModule } from './modules/database/seed.module';
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('MONGO_URI') || 'mongodb://localhost:27017/grocery-store',
+        uri: configService.get<string>('MONGO_URI'),
       }),
       inject: [ConfigService],
     }),
@@ -63,4 +63,4 @@ import { SeedModule } from './modules/database/seed.module';
     SeedModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }

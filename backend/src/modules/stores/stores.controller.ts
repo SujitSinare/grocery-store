@@ -69,7 +69,7 @@ export class StoresController {
   @Roles('super-admin')
   @ApiOperation({ summary: 'Create a new tenant store location (Super Admin only)' })
   async create(@Body() createStoreDto: CreateStoreDto) {
-    return this.storesService.create(createStoreDto);
+    return this.storesService.create(createStoreDto as any);
   }
 
   @Get()
@@ -92,7 +92,7 @@ export class StoresController {
   @Roles('super-admin')
   @ApiOperation({ summary: 'Update physical store parameters (Super Admin only)' })
   async update(@Param('id') id: string, @Body() updateStoreDto: UpdateStoreDto) {
-    return this.storesService.update(id, updateStoreDto);
+    return this.storesService.update(id, updateStoreDto as any);
   }
 
   @Patch(':id/manager')

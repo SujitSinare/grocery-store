@@ -38,4 +38,3 @@ export class ReportsController {
     return { downloadUrl: url };
   }
 }
-export { ReportsController };

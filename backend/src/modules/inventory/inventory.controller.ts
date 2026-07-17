@@ -5,6 +5,7 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { IsNotEmpty, IsString, IsNumber, IsOptional, IsBoolean } from 'class-validator';
+import { Types } from 'mongoose';
 
 class AddOrUpdateInventoryDto {
   @IsString()
@@ -77,7 +78,10 @@ export class InventoryController {
     @Body() dto: AddOrUpdateInventoryDto,
   ) {
     const { productId, ...data } = dto;
-    return this.inventoryService.addOrUpdate(storeId, productId, data);
+    return this.inventoryService.addOrUpdate(storeId, productId, {
+      ...data,
+      supplierId: data.supplierId ? new Types.ObjectId(data.supplierId) : undefined,
+    });
   }
 
   @Get()

@@ -140,4 +140,3 @@ export class InventoryService {
     }
   }
 }
-export { InventoryService };

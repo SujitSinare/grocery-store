@@ -158,4 +158,3 @@ export class OrdersService {
     return saved;
   }
 }
-export { OrdersService };

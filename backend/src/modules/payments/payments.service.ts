@@ -57,4 +57,3 @@ export class PaymentsService {
     return saved;
   }
 }
-export { PaymentsService };

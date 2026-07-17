@@ -5,6 +5,7 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { IsNotEmpty, IsString, IsOptional, IsBoolean, IsNumber } from 'class-validator';
+import { Types } from 'mongoose';
 
 class CreateCategoryDto {
   @IsString()
@@ -128,7 +129,12 @@ export class ProductsController {
   @Roles('super-admin', 'manager')
   @ApiOperation({ summary: 'Add a new general product definition (Admin/Manager only)' })
   async create(@Body() dto: CreateProductDto) {
-    return this.productsService.createProduct(dto);
+    const productData = {
+      ...dto,
+      categoryId: new Types.ObjectId(dto.categoryId),
+      brandId: new Types.ObjectId(dto.brandId),
+    };
+    return this.productsService.createProduct(productData as any);
   }
 
   @Get()
@@ -160,7 +166,12 @@ export class ProductsController {
   @Roles('super-admin', 'manager')
   @ApiOperation({ summary: 'Modify general product characteristics' })
   async update(@Param('id') id: string, @Body() dto: UpdateProductDto) {
-    return this.productsService.updateProduct(id, dto);
+    const updateData = {
+      ...dto,
+      categoryId: dto.categoryId ? new Types.ObjectId(dto.categoryId) : undefined,
+      brandId: dto.brandId ? new Types.ObjectId(dto.brandId) : undefined,
+    };
+    return this.productsService.updateProduct(id, updateData as any);
   }
 }
 export { CreateCategoryDto, CreateBrandDto, CreateProductDto, UpdateProductDto };

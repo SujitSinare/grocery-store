@@ -5,7 +5,7 @@ import { Order, OrderDocument } from '../orders/schemas/order.schema';
 import { Inventory, InventoryDocument } from '../inventory/schemas/inventory.schema';
 import { Expense, ExpenseDocument } from '../expenses/schemas/expense.schema';
 import * as ExcelJS from 'exceljs';
-import * as PDFDocument from 'pdfkit';
+import PDFDocument from 'pdfkit';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -130,7 +130,7 @@ export class ReportsService {
         subtotal: o.subTotal,
         tax: o.taxAmount,
         grandTotal: o.grandTotal,
-        date: new Date(o.createdAt as any).toLocaleString(),
+        date: new Date((o as any).createdAt).toLocaleString(),
       });
     });
 
@@ -213,4 +213,3 @@ export class ReportsService {
     return `/uploads/reports/${filename}`;
   }
 }
-export { ReportsService };

@@ -34,4 +34,3 @@ export class SettingsService {
     return setting.save();
   }
 }
-export { SettingsService };

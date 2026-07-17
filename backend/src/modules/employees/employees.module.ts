@@ -5,6 +5,7 @@ import { EmployeesService } from './employees.service';
 import { EmployeesController } from './employees.controller';
 import { UsersModule } from '../users/users.module';
 
+
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Employee.name, schema: EmployeeSchema }]),
@@ -14,4 +15,4 @@ import { UsersModule } from '../users/users.module';
   providers: [EmployeesService],
   exports: [EmployeesService, MongooseModule],
 })
-export class EmployeesModule {}
+export class EmployeesModule { }

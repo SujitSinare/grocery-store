@@ -4,7 +4,7 @@ import { Model, Types } from 'mongoose';
 import { Invoice, InvoiceDocument } from './schemas/invoice.schema';
 import { OrdersService } from '../orders/orders.service';
 import { StoresService } from '../stores/stores.service';
-import * as PDFDocument from 'pdfkit';
+import PDFDocument = require('pdfkit');
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -14,7 +14,7 @@ export class InvoicesService {
     @InjectModel(Invoice.name) private invoiceModel: Model<InvoiceDocument>,
     private ordersService: OrdersService,
     private storesService: StoresService,
-  ) {}
+  ) { }
 
   async getInvoiceByOrder(orderId: string): Promise<InvoiceDocument> {
     const inv = await this.invoiceModel.findOne({ orderId: new Types.ObjectId(orderId) }).exec();
@@ -32,7 +32,7 @@ export class InvoicesService {
     }
 
     const store = await this.storesService.findOne(order.storeId.toString());
-    
+
     // Ensure invoice folder exists
     const uploadDir = path.join(process.cwd(), 'uploads', 'invoices');
     if (!fs.existsSync(uploadDir)) {
@@ -62,7 +62,7 @@ export class InvoicesService {
 
     // --- Invoice Info ---
     doc.fillColor('#1F2937').fontSize(12).text(`Invoice No: ${invoiceNumber}`, 50, 140);
-    doc.text(`Date: ${new Date(order.createdAt as any).toLocaleString()}`, 50, 155);
+    doc.text(`Date: ${new Date((order as any).createdAt).toLocaleString()}`, 50, 155);
     doc.text(`Payment: ${order.paymentMethod.toUpperCase()} (${order.paymentStatus.toUpperCase()})`, 50, 170);
 
     if (order.customerId) {
@@ -74,12 +74,13 @@ export class InvoicesService {
 
     // --- Item Table Grid ---
     let y = 210;
-    doc.fillColor('#374151').fontSize(10);
-    doc.text('Item Description', 50, y, { bold: true });
+    doc.fillColor('#374151').fontSize(10).font('Helvetica-Bold');
+    doc.text('Item Description', 50, y);
     doc.text('Qty', 280, y, { align: 'right', width: 40 });
     doc.text('MRP', 340, y, { align: 'right', width: 50 });
     doc.text('GST%', 410, y, { align: 'right', width: 40 });
     doc.text('Total (INR)', 470, y, { align: 'right', width: 80 });
+    doc.font('Helvetica');
 
     doc.strokeColor('#E5E7EB').lineWidth(1).moveTo(50, y + 15).lineTo(550, y + 15).stroke();
     y += 25;
@@ -118,8 +119,10 @@ export class InvoicesService {
       y += 15;
     }
 
-    doc.fontSize(12).fillColor('#111827').text('Grand Total:', 350, y, { align: 'right', width: 100, bold: true });
-    doc.text(`Rs. ${order.grandTotal.toFixed(2)}`, 470, y, { align: 'right', width: 80, bold: true });
+    doc.fontSize(12).fillColor('#111827').font('Helvetica-Bold');
+    doc.text('Grand Total:', 350, y, { align: 'right', width: 100 });
+    doc.text(`Rs. ${order.grandTotal.toFixed(2)}`, 470, y, { align: 'right', width: 80 });
+    doc.font('Helvetica');
     y += 30;
 
     // --- Footer ---
@@ -139,4 +142,3 @@ export class InvoicesService {
     return invoice.save();
   }
 }
-export { InvoicesService };

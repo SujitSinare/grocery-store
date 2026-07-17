@@ -20,4 +20,3 @@ export class DashboardController {
     return this.reportsService.getDashboardSummary(sId);
   }
 }
-export { DashboardController };
