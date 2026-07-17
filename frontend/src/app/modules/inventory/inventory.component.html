@@ -1,0 +1,102 @@
+<div class="space-y-6">
+  
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <div>
+      <h2 class="text-3xl font-bold tracking-tight">{{ 'COMMON.INVENTORY' | translate }}</h2>
+      <p class="text-sm text-gray-500 mt-1">Manage store shelves stock levels, pricing, and reorders</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <!-- Toggle Filter Low Stock -->
+      <button (click)="toggleLowStockOnly()" [class.bg-yellow-500]="lowStockOnly()" [class.text-white]="lowStockOnly()" class="px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-800 font-semibold text-sm transition-all duration-150 flex items-center gap-2">
+        <span class="material-icons text-sm">warning</span>
+        Show Low Stock
+      </button>
+    </div>
+  </div>
+
+  <!-- Search & Filters -->
+  <div class="flex gap-4 max-w-md">
+    <div class="relative flex-1">
+      <span class="material-icons absolute left-4 top-3 text-gray-400">search</span>
+      <input type="text" [(ngModel)]="searchQuery" (input)="onSearch()" class="w-full pl-12 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-800/50 focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all duration-200" placeholder="Search by name, SKU, or barcode...">
+    </div>
+  </div>
+
+  <!-- Inventory Table Grid -->
+  <div class="glass-panel rounded-2xl shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="border-b border-gray-200 dark:border-gray-800 text-gray-500 text-sm bg-gray-50/50 dark:bg-gray-800/10">
+            <th class="py-4 px-6">Product Details</th>
+            <th class="py-4 px-6 text-center">Current Stock</th>
+            <th class="py-4 px-6 text-right">Selling Price</th>
+            <th class="py-4 px-6 text-right">MRP</th>
+            <th class="py-4 px-6">Batch No</th>
+            <th class="py-4 px-6 text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of inventory(); track item._id) {
+            <tr class="border-b border-gray-100 dark:border-gray-800/50 text-sm hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors duration-150">
+              <td class="py-4 px-6">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-green-500/10 text-green-600 flex items-center justify-center font-bold">
+                    <span class="material-icons">shopping_bag</span>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-gray-800 dark:text-gray-200">{{ item.productId.name }}</p>
+                    <p class="text-xs text-gray-400">SKU: {{ item.productId.sku }} | Barcode: {{ item.productId.barcode }}</p>
+                  </div>
+                </div>
+              </td>
+              <td class="py-4 px-6 text-center">
+                <span [class.bg-yellow-500/10]="item.currentStock <= item.minStock" [class.text-yellow-600]="item.currentStock <= item.minStock" [class.bg-green-500/10]="item.currentStock > item.minStock" [class.text-green-600]="item.currentStock > item.minStock" class="px-3 py-1 rounded-full text-xs font-bold">
+                  {{ item.currentStock }} Units
+                </span>
+              </td>
+              <td class="py-4 px-6 text-right font-semibold">Rs. {{ item.sellingPrice.toFixed(2) }}</td>
+              <td class="py-4 px-6 text-right text-gray-500">Rs. {{ item.mrp.toFixed(2) }}</td>
+              <td class="py-4 px-6 font-mono text-xs">{{ item.batchNumber || 'N/A' }}</td>
+              <td class="py-4 px-6 text-center">
+                <button (click)="openAdjustment(item)" class="text-green-500 font-bold hover:underline flex items-center gap-1 mx-auto text-xs">
+                  <span class="material-icons text-sm">tune</span>
+                  Adjust Stock
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Manual Adjustment Modal overlay -->
+  @if (selectedItem()) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/60 backdrop-blur-sm">
+      <div class="glass-panel p-6 rounded-2xl shadow-xl w-full max-w-md border border-white/20">
+        <h3 class="font-bold text-lg mb-2">Adjust Stock Levels</h3>
+        <p class="text-xs text-gray-500 mb-4">{{ selectedItem()?.productId?.name }}</p>
+
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1">Adjustment Quantity</label>
+            <input type="number" [(ngModel)]="adjustQty" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all duration-200" placeholder="e.g. +10 or -5">
+            <span class="text-[10px] text-gray-400 mt-1 block">Use positive numbers to add stock, negative to log damages/sales.</span>
+          </div>
+          
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1">Reason / Notes</label>
+            <input type="text" [(ngModel)]="adjustReason" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all duration-200" placeholder="e.g. Supplier Refill, Damaged Box">
+          </div>
+
+          <div class="flex gap-3 pt-2">
+            <button (click)="closeAdjustment()" class="flex-1 border border-gray-200 dark:border-gray-800 py-2.5 rounded-xl font-semibold hover:bg-gray-100 dark:hover:bg-gray-850 transition-colors duration-150">Cancel</button>
+            <button (click)="submitAdjustment()" [disabled]="!adjustQty || !adjustReason" class="flex-1 premium-gradient text-white py-2.5 rounded-xl font-bold shadow-md shadow-green-500/20 hover:opacity-95 transition-all duration-150 disabled:opacity-50">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+</div>

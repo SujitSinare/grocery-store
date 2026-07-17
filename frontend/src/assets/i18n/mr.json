@@ -1,0 +1,48 @@
+{
+  "COMMON": {
+    "LOGIN": "लॉगिन",
+    "REGISTER": "नोंदणी",
+    "LOGOUT": "लॉगआउट",
+    "SAVE": "जतन करा",
+    "CANCEL": "रद्द करा",
+    "DASHBOARD": "डॅशबोर्ड",
+    "PRODUCTS": "उत्पादने",
+    "INVENTORY": "इन्व्हेंटरी",
+    "ORDERS": "विक्री ऑर्डर्स",
+    "REPORTS": "अहवाल",
+    "SETTINGS": "सेटिंग्ज",
+    "STORES": "स्टोअर्स",
+    "EMPLOYEES": "कर्मचारी",
+    "EXPENSES": "खर्च",
+    "SUPPLIERS": "पुरवठादार",
+    "GST_NO": "जीएसटी क्रमांक",
+    "PHONE": "फोन नंबर",
+    "EMAIL": "ईमेल",
+    "ADDRESS": "पत्ता"
+  },
+  "DASHBOARD": {
+    "TITLE": "विश्लेषण डॅशबोर्ड",
+    "REVENUE": "एकूण महसूल",
+    "EXPENSES": "दुकानाचा खर्च",
+    "NET_PROFIT": "निव्वळ नफा",
+    "LOW_STOCK": "कमी स्टॉक इशारे",
+    "RECENT_ORDERS": "अलीकडील ऑर्डर्स",
+    "SALES_TRENDS": "विक्री ट्रेंड्स विहंगावलोकन"
+  },
+  "POS": {
+    "BILLING": "पीओएस बिलिंग टर्मिनल",
+    "BARCODE_SCAN": "बारकोड स्कॅन करा किंवा शोधा",
+    "ADD_ITEM": "जोडा",
+    "CART": "खरेदी कार्ट",
+    "SUBTOTAL": "उपएकूण",
+    "TAX": "जीएसटी कर",
+    "DISCOUNT": "सवलत",
+    "GRAND_TOTAL": "एकूण देय रक्कम",
+    "PAYMENT_METHOD": "पेमेंट पद्धत",
+    "PROCEED_PAY": "पेमेंटसाठी पुढे जा",
+    "GENERATE_QR": "यूपीआय क्यूआर तयार करा",
+    "VERIFY_UPI": "यूपीआय पेमेंट सत्यापित करा",
+    "PRINT_INVOICE": "बिल प्रिंट करा",
+    "DOWNLOAD_PDF": "पीडीएफ बिल डाउनलोड करा"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "COMMON": {
+    "LOGIN": "Login",
+    "REGISTER": "Register",
+    "LOGOUT": "Logout",
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "DASHBOARD": "Dashboard",
+    "PRODUCTS": "Products",
+    "INVENTORY": "Inventory",
+    "ORDERS": "Orders",
+    "REPORTS": "Reports",
+    "SETTINGS": "Settings",
+    "STORES": "Stores",
+    "EMPLOYEES": "Employees",
+    "EXPENSES": "Expenses",
+    "SUPPLIERS": "Suppliers",
+    "GST_NO": "GST Number",
+    "PHONE": "Phone",
+    "EMAIL": "Email",
+    "ADDRESS": "Address"
+  },
+  "DASHBOARD": {
+    "TITLE": "Analytics Dashboard",
+    "REVENUE": "Total Revenue",
+    "EXPENSES": "Store Expenses",
+    "NET_PROFIT": "Net Profit",
+    "LOW_STOCK": "Low Stock Alerts",
+    "RECENT_ORDERS": "Recent Orders",
+    "SALES_TRENDS": "Sales Trends Overview"
+  },
+  "POS": {
+    "BILLING": "POS Billing Terminal",
+    "BARCODE_SCAN": "Scan Barcode or Search",
+    "ADD_ITEM": "Add Item",
+    "CART": "Shopping Cart",
+    "SUBTOTAL": "Subtotal",
+    "TAX": "GST Tax",
+    "DISCOUNT": "Discount",
+    "GRAND_TOTAL": "Grand Total",
+    "PAYMENT_METHOD": "Payment Method",
+    "PROCEED_PAY": "Proceed to Pay",
+    "GENERATE_QR": "Generate UPI QR",
+    "VERIFY_UPI": "Verify UPI Payment",
+    "PRINT_INVOICE": "Print Invoice",
+    "DOWNLOAD_PDF": "Download PDF Invoice"
+  }
+}

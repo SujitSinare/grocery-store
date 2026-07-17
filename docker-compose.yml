@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: grocery-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - grocery-network
+
+  redis:
+    image: redis:7.0-alpine
+    container_name: grocery-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - grocery-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: grocery-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - MONGO_URI=mongodb://mongodb:27017/grocery-store
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - JWT_SECRET=super_secret_jwt_key_12345
+      - JWT_REFRESH_SECRET=super_secret_refresh_jwt_key_12345
+      - PORT=3000
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - grocery-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: grocery-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - grocery-network
+
+volumes:
+  mongo-data:
+  redis-data:
+
+networks:
+  grocery-network:
+    driver: bridge

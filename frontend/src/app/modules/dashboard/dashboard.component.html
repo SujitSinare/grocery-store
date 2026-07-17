@@ -1,0 +1,158 @@
+<div class="space-y-6">
+  
+  <!-- Top banner & info -->
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <div>
+      <h2 class="text-3xl font-bold tracking-tight">{{ 'DASHBOARD.TITLE' | translate }}</h2>
+      <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Real-time store performance overview</p>
+    </div>
+    <div class="flex items-center gap-2 bg-white dark:bg-gray-800/80 px-4 py-2 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm">
+      <span class="material-icons text-green-500 text-sm">circle</span>
+      <span class="text-xs font-semibold uppercase tracking-wider">Live System Sync</span>
+    </div>
+  </div>
+
+  <!-- KPI Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    
+    <!-- Total Revenue Card -->
+    <div class="glass-panel p-6 rounded-2xl shadow-sm hover-lift flex items-center justify-between border-l-4 border-green-500">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">{{ 'DASHBOARD.REVENUE' | translate }}</p>
+        <h3 class="text-2xl font-bold">Rs. {{ metrics().totalRevenue.toFixed(2) }}</h3>
+        <span class="text-xs text-green-500 font-medium">↑ +12.4% vs last week</span>
+      </div>
+      <div class="p-3 bg-green-500/10 text-green-500 rounded-xl">
+        <span class="material-icons">payments</span>
+      </div>
+    </div>
+
+    <!-- Store Expenses Card -->
+    <div class="glass-panel p-6 rounded-2xl shadow-sm hover-lift flex items-center justify-between border-l-4 border-red-500">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">{{ 'DASHBOARD.EXPENSES' | translate }}</p>
+        <h3 class="text-2xl font-bold">Rs. {{ metrics().totalExpenses.toFixed(2) }}</h3>
+        <span class="text-xs text-red-500 font-medium">↑ +4.2% utility rates</span>
+      </div>
+      <div class="p-3 bg-red-500/10 text-red-500 rounded-xl">
+        <span class="material-icons">shopping_bag</span>
+      </div>
+    </div>
+
+    <!-- Net Profit Card -->
+    <div class="glass-panel p-6 rounded-2xl shadow-sm hover-lift flex items-center justify-between border-l-4 border-blue-500">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">{{ 'DASHBOARD.NET_PROFIT' | translate }}</p>
+        <h3 class="text-2xl font-bold">Rs. {{ metrics().netProfit.toFixed(2) }}</h3>
+        <span class="text-xs text-green-500 font-medium">↑ +8.1% margins</span>
+      </div>
+      <div class="p-3 bg-blue-500/10 text-blue-500 rounded-xl">
+        <span class="material-icons">trending_up</span>
+      </div>
+    </div>
+
+    <!-- Low Stock Alerts Card -->
+    <div class="glass-panel p-6 rounded-2xl shadow-sm hover-lift flex items-center justify-between border-l-4 border-yellow-500">
+      <div class="space-y-1">
+        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">{{ 'DASHBOARD.LOW_STOCK' | translate }}</p>
+        <h3 class="text-2xl font-bold">{{ metrics().lowStockCount }} Items</h3>
+        <span class="text-xs text-yellow-600 font-medium">Needs reordering</span>
+      </div>
+      <div class="p-3 bg-yellow-500/10 text-yellow-500 rounded-xl">
+        <span class="material-icons">warning_amber</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Charts & Aggregates -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    
+    <!-- Interactive Sales Chart -->
+    <div class="glass-panel p-6 rounded-2xl shadow-sm lg:col-span-2 space-y-4">
+      <div class="flex justify-between items-center">
+        <h4 class="font-bold text-lg">Sales Trends Overview (Monthly)</h4>
+        <span class="text-xs text-gray-500">Revenue in INR</span>
+      </div>
+      
+      <!-- Modern Premium SVG Chart -->
+      <div class="h-64 flex items-end justify-between px-2 pt-6 border-b border-gray-200 dark:border-gray-800">
+        @for (bar of chartData(); track bar.month) {
+          <div class="flex flex-col items-center gap-2 w-1/12 group relative">
+            <!-- Tooltip -->
+            <div class="absolute bottom-full mb-2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none">
+              Rs. {{ bar.revenue }}
+            </div>
+            <div class="w-full bg-green-500/80 hover:bg-green-500 rounded-t transition-all duration-300" [style.height.px]="getBarHeight(bar.revenue)"></div>
+            <span class="text-xs font-medium text-gray-500 dark:text-gray-400 mt-2">{{ bar.month }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Real-time Low Stock Warning List -->
+    <div class="glass-panel p-6 rounded-2xl shadow-sm space-y-4">
+      <div class="flex justify-between items-center border-b border-gray-100 dark:border-gray-800 pb-3">
+        <h4 class="font-bold text-lg flex items-center gap-2">
+          <span class="material-icons text-yellow-500">notifications_active</span>
+          Live Stock Warnings
+        </h4>
+        <span class="text-xs bg-yellow-500/10 text-yellow-600 px-2 py-1 rounded-full font-semibold">Immediate Action</span>
+      </div>
+      
+      <div class="space-y-3 max-h-60 overflow-y-auto">
+        @for (alert of stockAlerts(); track alert._id) {
+          <div class="flex items-center justify-between p-3 bg-yellow-500/5 dark:bg-yellow-950/10 border border-yellow-200/50 dark:border-yellow-900/30 rounded-xl hover-lift">
+            <div>
+              <p class="text-sm font-semibold text-gray-800 dark:text-gray-200">{{ alert.productName }}</p>
+              <p class="text-xs text-gray-500">In Stock: <strong class="text-yellow-600">{{ alert.currentStock }}</strong> (Min: {{ alert.minStock }})</p>
+            </div>
+            <span class="material-icons text-yellow-600">report_problem</span>
+          </div>
+        } @empty {
+          <div class="text-center py-6 text-gray-400 text-sm">
+            <span class="material-icons text-green-500 text-3xl mb-1">done_all</span>
+            <p>All stock levels normal</p>
+          </div>
+        }
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Recent Orders List Grid -->
+  <div class="glass-panel p-6 rounded-2xl shadow-sm">
+    <h4 class="font-bold text-lg mb-4">Recent Transaction History</h4>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="border-b border-gray-200 dark:border-gray-800 text-gray-500 text-sm">
+            <th class="py-3 px-4">Order ID</th>
+            <th class="py-3 px-4">Type</th>
+            <th class="py-3 px-4">Payment Method</th>
+            <th class="py-3 px-4">Status</th>
+            <th class="py-3 px-4">Total Amount</th>
+            <th class="py-3 px-4">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (order of recentOrders(); track order._id) {
+            <tr class="border-b border-gray-100 dark:border-gray-800/50 text-sm hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors duration-150">
+              <td class="py-3 px-4 font-mono text-xs text-green-600 dark:text-green-400">{{ order._id }}</td>
+              <td class="py-3 px-4 capitalize font-semibold">{{ order.orderType }}</td>
+              <td class="py-3 px-4 capitalize">{{ order.paymentMethod }}</td>
+              <td class="py-3 px-4">
+                <span [class.bg-green-500/10]="order.paymentStatus === 'paid'" [class.text-green-500]="order.paymentStatus === 'paid'" [class.bg-yellow-500/10]="order.paymentStatus === 'pending'" [class.text-yellow-600]="order.paymentStatus === 'pending'" class="px-2 py-1 rounded-full text-xs font-bold uppercase">
+                  {{ order.paymentStatus }}
+                </span>
+              </td>
+              <td class="py-3 px-4 font-bold">Rs. {{ order.grandTotal.toFixed(2) }}</td>
+              <td class="py-3 px-4 text-gray-500">{{ order.createdAt | date:'medium' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

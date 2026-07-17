@@ -1,0 +1,47 @@
+<div class="space-y-6">
+  
+  <div>
+    <h2 class="text-3xl font-bold tracking-tight">{{ 'COMMON.REPORTS' | translate }}</h2>
+    <p class="text-sm text-gray-500 mt-1">Generate and export store financial sheets and inventory status</p>
+  </div>
+
+  <!-- Action Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
+    
+    <!-- Excel Exporter Box -->
+    <div class="glass-panel p-6 rounded-2xl shadow-sm hover-lift border-t-4 border-green-500 space-y-4 flex flex-col justify-between">
+      <div class="space-y-2">
+        <div class="flex items-center gap-3">
+          <span class="material-icons text-green-500 text-3xl">table_chart</span>
+          <h3 class="font-bold text-lg">Excel Spreadsheets Exporter</h3>
+        </div>
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          Generates a multi-tab workbook containing the Complete Sales Register ledger and live Shelf Stock levels.
+        </p>
+      </div>
+      <button (click)="exportExcel()" class="w-full premium-gradient text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-md shadow-green-500/10 hover:opacity-95 active:scale-98 transition-all duration-150">
+        <span class="material-icons text-sm">download</span>
+        Compile & Download Excel
+      </button>
+    </div>
+
+    <!-- PDF Executive Summary Box -->
+    <div class="glass-panel p-6 rounded-2xl shadow-sm hover-lift border-t-4 border-red-500 space-y-4 flex flex-col justify-between">
+      <div class="space-y-2">
+        <div class="flex items-center gap-3">
+          <span class="material-icons text-red-500 text-3xl">picture_as_pdf</span>
+          <h3 class="font-bold text-lg">PDF Executive Performance Report</h3>
+        </div>
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          Generates a formatted PDF report summarizing sales volumes, tax compliance (GST breaks), and expense margins.
+        </p>
+      </div>
+      <button (click)="exportPdf()" class="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-md shadow-red-500/10 active:scale-98 transition-all duration-150">
+        <span class="material-icons text-sm">download</span>
+        Compile & Download PDF
+      </button>
+    </div>
+
+  </div>
+
+</div>

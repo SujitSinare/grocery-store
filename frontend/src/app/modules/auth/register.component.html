@@ -1,0 +1,35 @@
+<div class="max-w-md mx-auto mt-20 p-8 glass-panel rounded-2xl shadow-xl border border-white/20">
+  <div class="text-center mb-8">
+    <span class="material-icons text-green-500 text-5xl mb-2">person_add</span>
+    <h2 class="text-2xl font-bold tracking-tight">Create Account</h2>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Join as a Customer for loyalty rewards</p>
+  </div>
+
+  <!-- Form -->
+  <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="space-y-4">
+    <div>
+      <label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1">Full Name</label>
+      <input type="text" formControlName="name" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-800/50 focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all duration-200" placeholder="John Doe">
+    </div>
+    <div>
+      <label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1">Email Address</label>
+      <input type="email" formControlName="email" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-800/50 focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all duration-200" placeholder="john@example.com">
+    </div>
+    <div>
+      <label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1">Phone Number</label>
+      <input type="tel" formControlName="phone" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-800/50 focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all duration-200" placeholder="9876543210">
+    </div>
+    <div>
+      <label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1">Password</label>
+      <input type="password" formControlName="password" class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-800/50 focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all duration-200" placeholder="••••••••">
+    </div>
+    <button type="submit" [disabled]="registerForm.invalid || loading" class="w-full premium-gradient text-white py-3 rounded-xl font-bold hover:opacity-95 transition-all duration-150 disabled:opacity-50">
+      {{ loading ? 'Creating Account...' : 'Sign Up' }}
+    </button>
+  </form>
+
+  <div class="mt-6 text-center text-xs">
+    <span class="text-gray-500">Already have an account? </span>
+    <a routerLink="/auth/login" class="text-green-500 font-bold hover:underline">Login here</a>
+  </div>
+</div>
