@@ -1,6 +1,6 @@
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { User, UserDocument } from '../users/schemas/user.schema';
 import { Store, StoreDocument } from '../stores/schemas/store.schema';
 import { Employee, EmployeeDocument } from '../employees/schemas/employee.schema';
@@ -128,6 +128,7 @@ export class SeedService implements OnApplicationBootstrap {
 
     // 6. Create Default Store
     const testStore = await this.storeModel.create({
+      _id: new Types.ObjectId('660000000000000000000001') as any,
       name: 'Downtown Supermart',
       gstNumber: '27AAAAA1111A1Z1',
       address: 'Shop No 12, Main Street, Pune, Maharashtra - 411001',
