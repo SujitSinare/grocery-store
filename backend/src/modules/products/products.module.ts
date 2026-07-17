@@ -5,6 +5,7 @@ import { Category, CategorySchema } from './schemas/category.schema';
 import { Brand, BrandSchema } from './schemas/brand.schema';
 import { ProductsService } from './products.service';
 import { ProductsController } from './products.controller';
+import { EmployeesModule } from '../employees/employees.module';
 
 @Module({
   imports: [
@@ -13,9 +14,10 @@ import { ProductsController } from './products.controller';
       { name: Category.name, schema: CategorySchema },
       { name: Brand.name, schema: BrandSchema },
     ]),
+    EmployeesModule
   ],
   controllers: [ProductsController],
   providers: [ProductsService],
   exports: [ProductsService, MongooseModule],
 })
-export class ProductsModule {}
+export class ProductsModule { }

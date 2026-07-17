@@ -3,13 +3,15 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuditLog, AuditLogSchema } from './schemas/audit-log.schema';
 import { AuditLogsService } from './audit-logs.service';
 import { AuditLogsController } from './audit-logs.controller';
+import { EmployeesModule } from '../employees/employees.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: AuditLog.name, schema: AuditLogSchema }]),
+    EmployeesModule
   ],
   controllers: [AuditLogsController],
   providers: [AuditLogsService],
   exports: [AuditLogsService, MongooseModule],
 })
-export class AuditLogsModule {}
+export class AuditLogsModule { }

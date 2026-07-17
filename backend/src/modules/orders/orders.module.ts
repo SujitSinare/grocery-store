@@ -5,6 +5,7 @@ import { OrdersService } from './orders.service';
 import { OrdersController } from './orders.controller';
 import { Inventory, InventorySchema } from '../inventory/schemas/inventory.schema';
 import { Customer, CustomerSchema } from '../customers/schemas/customer.schema';
+import { EmployeesModule } from '../employees/employees.module';
 
 @Module({
   imports: [
@@ -13,9 +14,10 @@ import { Customer, CustomerSchema } from '../customers/schemas/customer.schema';
       { name: Inventory.name, schema: InventorySchema },
       { name: Customer.name, schema: CustomerSchema },
     ]),
+    EmployeesModule
   ],
   controllers: [OrdersController],
   providers: [OrdersService],
   exports: [OrdersService, MongooseModule],
 })
-export class OrdersModule {}
+export class OrdersModule { }

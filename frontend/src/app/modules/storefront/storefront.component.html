@@ -1,49 +1,57 @@
 <div class="space-y-6">
-  
+
   <!-- Banner -->
   <div class="premium-gradient p-8 rounded-3xl text-white space-y-2 shadow-lg shadow-green-500/10">
     <h2 class="text-3xl font-bold tracking-tight">Fresh Groceries, Delivered Fast!</h2>
-    <p class="text-sm opacity-90 max-w-lg">Browse our premium grocery sections, add items to your basket, and check out instantly with simulated UPI payments.</p>
+    <p class="text-sm opacity-90 max-w-lg">Browse our premium grocery sections, add items to your basket, and check out
+      instantly with simulated UPI payments.</p>
   </div>
 
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-    
+
     <!-- Left Side: Catalog Cards (8 columns) -->
     <div class="lg:col-span-8 space-y-6">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h3 class="font-bold text-xl">Browse Catalog</h3>
         <div class="relative w-full sm:w-64">
           <span class="material-icons absolute left-3 top-2.5 text-gray-400 text-sm">search</span>
-          <input type="text" [(ngModel)]="searchQuery" (input)="onSearch()" class="w-full pl-9 pr-4 py-2 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-850 focus:outline-none text-xs" placeholder="Search groceries...">
+          <input type="text" [(ngModel)]="searchQuery" (input)="onSearch()"
+            class="w-full pl-9 pr-4 py-2 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-850 focus:outline-none text-xs"
+            placeholder="Search groceries...">
         </div>
       </div>
 
       <!-- Product Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         @for (prod of products(); track prod._id) {
-          <div class="glass-panel rounded-2xl shadow-sm hover-lift overflow-hidden flex flex-col justify-between border border-gray-150 dark:border-gray-800/80">
-            <div class="p-4 space-y-3">
-              <!-- Simulated product image -->
-              <div class="h-36 bg-green-500/5 text-green-500/30 flex items-center justify-center rounded-xl relative">
-                <span class="material-icons text-5xl">shopping_basket</span>
-                <span class="absolute top-2 left-2 text-[9px] bg-green-500/10 text-green-600 px-2 py-0.5 rounded font-bold uppercase">{{ prod.categoryId?.name }}</span>
-              </div>
-              <div>
-                <h4 class="font-bold text-sm text-gray-800 dark:text-gray-200 line-clamp-1">{{ prod.name }}</h4>
-                <p class="text-[10px] text-gray-400">Brand: {{ prod.brandId?.name }}</p>
-              </div>
+        <div
+          class="glass-panel rounded-2xl shadow-sm hover-lift overflow-hidden flex flex-col justify-between border border-gray-150 dark:border-gray-800/80">
+          <div class="p-4 space-y-3">
+            <!-- Simulated product image -->
+            <div class="h-36 bg-green-500/5 text-green-500/30 flex items-center justify-center rounded-xl relative">
+              <span class="material-icons text-5xl">shopping_basket</span>
+              <span
+                class="absolute top-2 left-2 text-[9px] bg-green-500/10 text-green-600 px-2 py-0.5 rounded font-bold uppercase">{{
+                prod?.categoryId?.name }}</span>
             </div>
-
-            <div class="p-4 bg-gray-50/50 dark:bg-gray-850/20 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
-              <div>
-                <p class="font-bold text-sm text-green-600">Rs. {{ prod.sellingPrice.toFixed(2) }}</p>
-                <p class="text-[9px] text-gray-400 line-through">MRP: Rs. {{ prod.mrp }}</p>
-              </div>
-              <button (click)="addToBasket(prod)" class="bg-green-500 hover:bg-green-600 text-white p-2 rounded-xl flex items-center justify-center transition-colors duration-150">
-                <span class="material-icons text-sm">add_shopping_cart</span>
-              </button>
+            <div>
+              <h4 class="font-bold text-sm text-gray-800 dark:text-gray-200 line-clamp-1">{{ prod.name }}</h4>
+              <p class="text-[10px] text-gray-400">Brand: {{ prod?.brandId?.name }}</p>
             </div>
           </div>
+
+          <div
+            class="p-4 bg-gray-50/50 dark:bg-gray-850/20 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+            <div>
+              <p class="font-bold text-sm text-green-600">Rs. {{ prod.sellingPrice.toFixed(2) }}</p>
+              <p class="text-[9px] text-gray-400 line-through">MRP: Rs. {{ prod.mrp }}</p>
+            </div>
+            <button (click)="addToBasket(prod)"
+              class="bg-green-500 hover:bg-green-600 text-white p-2 rounded-xl flex items-center justify-center transition-colors duration-150">
+              <span class="material-icons text-sm">add_shopping_cart</span>
+            </button>
+          </div>
+        </div>
         }
       </div>
     </div>
@@ -54,44 +62,48 @@
 
       <div class="space-y-3 max-h-[300px] overflow-y-auto pr-1">
         @for (item of cartStore.cartItems(); track item.productId) {
-          <div class="flex items-center justify-between text-xs border-b border-gray-50 dark:border-gray-800 pb-2">
-            <div class="flex-1">
-              <p class="font-semibold text-gray-800 dark:text-gray-200">{{ item.name }}</p>
-              <p class="text-[10px] text-gray-400">{{ item.qty }} x Rs. {{ item.price }}</p>
-            </div>
-            <div class="flex items-center gap-2">
-              <button (click)="cartStore.updateQty(item.productId, item.qty - 1)" class="w-6 h-6 border border-gray-200 dark:border-gray-800 rounded flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800">-</button>
-              <span class="w-4 text-center font-bold">{{ item.qty }}</span>
-              <button (click)="cartStore.updateQty(item.productId, item.qty + 1)" class="w-6 h-6 border border-gray-200 dark:border-gray-800 rounded flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800">+</button>
-            </div>
+        <div class="flex items-center justify-between text-xs border-b border-gray-50 dark:border-gray-800 pb-2">
+          <div class="flex-1">
+            <p class="font-semibold text-gray-800 dark:text-gray-200">{{ item.name }}</p>
+            <p class="text-[10px] text-gray-400">{{ item.qty }} x Rs. {{ item.price }}</p>
           </div>
+          <div class="flex items-center gap-2">
+            <button (click)="cartStore.updateQty(item.productId, item.qty - 1)"
+              class="w-6 h-6 border border-gray-200 dark:border-gray-800 rounded flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800">-</button>
+            <span class="w-4 text-center font-bold">{{ item.qty }}</span>
+            <button (click)="cartStore.updateQty(item.productId, item.qty + 1)"
+              class="w-6 h-6 border border-gray-200 dark:border-gray-800 rounded flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800">+</button>
+          </div>
+        </div>
         } @empty {
-          <div class="text-center py-12 text-gray-400 text-xs">
-            <span class="material-icons text-3xl mb-1 text-gray-300">shopping_cart</span>
-            <p>Basket is empty</p>
-          </div>
+        <div class="text-center py-12 text-gray-400 text-xs">
+          <span class="material-icons text-3xl mb-1 text-gray-300">shopping_cart</span>
+          <p>Basket is empty</p>
+        </div>
         }
       </div>
 
       @if (cartStore.cartItems().length > 0) {
-        <div class="border-t border-gray-100 dark:border-gray-800 pt-3 space-y-2 text-xs">
-          <div class="flex justify-between font-semibold">
-            <span>Items Total</span>
-            <span>Rs. {{ cartStore.subTotal().toFixed(2) }}</span>
-          </div>
-          <div class="flex justify-between font-semibold">
-            <span>Estimated Tax (GST)</span>
-            <span>Rs. {{ cartStore.taxTotal().toFixed(2) }}</span>
-          </div>
-          <div class="flex justify-between text-sm font-bold text-gray-800 dark:text-gray-100 border-t border-gray-100 dark:border-gray-800 pt-2">
-            <span>Grand Total</span>
-            <span>Rs. {{ cartStore.grandTotal().toFixed(2) }}</span>
-          </div>
+      <div class="border-t border-gray-100 dark:border-gray-800 pt-3 space-y-2 text-xs">
+        <div class="flex justify-between font-semibold">
+          <span>Items Total</span>
+          <span>Rs. {{ cartStore.subTotal().toFixed(2) }}</span>
         </div>
+        <div class="flex justify-between font-semibold">
+          <span>Estimated Tax (GST)</span>
+          <span>Rs. {{ cartStore.taxTotal().toFixed(2) }}</span>
+        </div>
+        <div
+          class="flex justify-between text-sm font-bold text-gray-800 dark:text-gray-100 border-t border-gray-100 dark:border-gray-800 pt-2">
+          <span>Grand Total</span>
+          <span>Rs. {{ cartStore.grandTotal().toFixed(2) }}</span>
+        </div>
+      </div>
 
-        <button (click)="checkout()" [disabled]="checkoutLoading" class="w-full premium-gradient text-white py-3 rounded-xl font-bold hover:opacity-95 transition-all duration-150 disabled:opacity-50 text-xs shadow-md shadow-green-500/10">
-          {{ checkoutLoading ? 'Checking out...' : 'Simulate UPI Checkout' }}
-        </button>
+      <button (click)="checkout()" [disabled]="checkoutLoading"
+        class="w-full premium-gradient text-white py-3 rounded-xl font-bold hover:opacity-95 transition-all duration-150 disabled:opacity-50 text-xs shadow-md shadow-green-500/10">
+        {{ checkoutLoading ? 'Checking out...' : 'Simulate UPI Checkout' }}
+      </button>
       }
     </div>
 
@@ -101,37 +113,73 @@
 
 <!-- Dynamic Simulated UPI Checkout Dialog -->
 @if (showUpiOverlay() && activePayment()) {
-  <div class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/60 backdrop-blur-sm">
-    <div class="glass-panel p-6 rounded-2xl shadow-xl w-full max-w-sm text-center border border-white/20 space-y-4">
-      <h3 class="font-bold text-lg flex items-center justify-center gap-2">
-        <span class="material-icons text-blue-500">qr_code_2</span>
-        Scan UPI to Confirm Order
-      </h3>
-      <p class="text-xs text-gray-500">Total: Rs. {{ activePayment()?.amount }}</p>
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/60 backdrop-blur-sm">
+  <div class="glass-panel p-6 rounded-2xl shadow-xl w-full max-w-sm text-center border border-white/20 space-y-4">
+    <h3 class="font-bold text-lg flex items-center justify-center gap-2">
+      <span class="material-icons text-blue-500">qr_code_2</span>
+      Scan UPI to Confirm Order
+    </h3>
+    <p class="text-xs text-gray-500">Total: Rs. {{ activePayment()?.amount }}</p>
 
-      <!-- SVG simulated QR -->
-      <div class="w-44 h-44 bg-white p-3 rounded-xl mx-auto flex items-center justify-center border border-gray-250 relative">
-        <div class="grid grid-cols-6 gap-1 w-full h-full opacity-80">
-          <div class="bg-gray-900 rounded-sm"></div><div class="bg-gray-900 rounded-sm"></div><div class="bg-gray-100 rounded-sm"></div><div class="bg-gray-900 rounded-sm"></div><div class="bg-gray-900 rounded-sm"></div><div class="bg-gray-900 rounded-sm"></div>
-          <div class="bg-gray-900 rounded-sm"></div><div class="bg-gray-100 rounded-sm"></div><div class="bg-gray-900 rounded-sm"></div><div class="bg-gray-100 rounded-sm"></div><div class="bg-gray-100 rounded-sm"></div><div class="bg-gray-900 rounded-sm"></div>
-          <div class="bg-gray-900 rounded-sm"></div><div class="bg-gray-900 rounded-sm"></div><div class="bg-gray-100 rounded-sm"></div><div class="bg-gray-900 rounded-sm"></div><div class="bg-gray-900 rounded-sm"></div><div class="bg-gray-900 rounded-sm"></div>
-          <div class="bg-gray-100 rounded-sm"></div><div class="bg-gray-900 rounded-sm"></div><div class="bg-gray-900 rounded-sm"></div><div class="bg-gray-100 rounded-sm"></div><div class="bg-gray-100 rounded-sm"></div><div class="bg-gray-900 rounded-sm"></div>
-          <div class="bg-gray-900 rounded-sm"></div><div class="bg-gray-100 rounded-sm"></div><div class="bg-gray-900 rounded-sm"></div><div class="bg-gray-900 rounded-sm"></div><div class="bg-gray-105 rounded-sm"></div><div class="bg-gray-900 rounded-sm"></div>
-          <div class="bg-gray-950 rounded-sm"></div><div class="bg-gray-950 rounded-sm"></div><div class="bg-gray-100 rounded-sm"></div><div class="bg-gray-955 rounded-sm"></div><div class="bg-gray-955 rounded-sm"></div><div class="bg-gray-955 rounded-sm"></div>
-        </div>
-        <div class="absolute inset-0 m-auto w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md">
-          <span class="material-icons text-green-500 text-lg">check_circle</span>
-        </div>
+    <!-- SVG simulated QR -->
+    <div
+      class="w-44 h-44 bg-white p-3 rounded-xl mx-auto flex items-center justify-center border border-gray-250 relative">
+      <div class="grid grid-cols-6 gap-1 w-full h-full opacity-80">
+        <div class="bg-gray-900 rounded-sm"></div>
+        <div class="bg-gray-900 rounded-sm"></div>
+        <div class="bg-gray-100 rounded-sm"></div>
+        <div class="bg-gray-900 rounded-sm"></div>
+        <div class="bg-gray-900 rounded-sm"></div>
+        <div class="bg-gray-900 rounded-sm"></div>
+        <div class="bg-gray-900 rounded-sm"></div>
+        <div class="bg-gray-100 rounded-sm"></div>
+        <div class="bg-gray-900 rounded-sm"></div>
+        <div class="bg-gray-100 rounded-sm"></div>
+        <div class="bg-gray-100 rounded-sm"></div>
+        <div class="bg-gray-900 rounded-sm"></div>
+        <div class="bg-gray-900 rounded-sm"></div>
+        <div class="bg-gray-900 rounded-sm"></div>
+        <div class="bg-gray-100 rounded-sm"></div>
+        <div class="bg-gray-900 rounded-sm"></div>
+        <div class="bg-gray-900 rounded-sm"></div>
+        <div class="bg-gray-900 rounded-sm"></div>
+        <div class="bg-gray-100 rounded-sm"></div>
+        <div class="bg-gray-900 rounded-sm"></div>
+        <div class="bg-gray-900 rounded-sm"></div>
+        <div class="bg-gray-100 rounded-sm"></div>
+        <div class="bg-gray-100 rounded-sm"></div>
+        <div class="bg-gray-900 rounded-sm"></div>
+        <div class="bg-gray-900 rounded-sm"></div>
+        <div class="bg-gray-100 rounded-sm"></div>
+        <div class="bg-gray-900 rounded-sm"></div>
+        <div class="bg-gray-900 rounded-sm"></div>
+        <div class="bg-gray-105 rounded-sm"></div>
+        <div class="bg-gray-900 rounded-sm"></div>
+        <div class="bg-gray-950 rounded-sm"></div>
+        <div class="bg-gray-950 rounded-sm"></div>
+        <div class="bg-gray-100 rounded-sm"></div>
+        <div class="bg-gray-955 rounded-sm"></div>
+        <div class="bg-gray-955 rounded-sm"></div>
+        <div class="bg-gray-955 rounded-sm"></div>
       </div>
-
-      <div class="bg-blue-50 dark:bg-blue-950/20 text-blue-700 dark:text-blue-400 p-2.5 rounded-lg text-[10px] text-left border border-blue-200/50">
-        <strong>Customer UPI Payment</strong>: In production, this QR triggers a mobile UPI push notification. Click Confirm to verify.
-      </div>
-
-      <div class="flex gap-3">
-        <button (click)="closeUpiOverlay()" class="flex-1 border border-gray-200 dark:border-gray-800 py-2 rounded-xl text-xs font-semibold hover:bg-gray-100 dark:hover:bg-gray-850">Cancel</button>
-        <button (click)="confirmUpiPayment()" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 rounded-xl text-xs font-bold shadow-md shadow-green-500/10">Confirm Payment</button>
+      <div class="absolute inset-0 m-auto w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md">
+        <span class="material-icons text-green-500 text-lg">check_circle</span>
       </div>
     </div>
+
+    <div
+      class="bg-blue-50 dark:bg-blue-950/20 text-blue-700 dark:text-blue-400 p-2.5 rounded-lg text-[10px] text-left border border-blue-200/50">
+      <strong>Customer UPI Payment</strong>: In production, this QR triggers a mobile UPI push notification. Click
+      Confirm to verify.
+    </div>
+
+    <div class="flex gap-3">
+      <button (click)="closeUpiOverlay()"
+        class="flex-1 border border-gray-200 dark:border-gray-800 py-2 rounded-xl text-xs font-semibold hover:bg-gray-100 dark:hover:bg-gray-850">Cancel</button>
+      <button (click)="confirmUpiPayment()"
+        class="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 rounded-xl text-xs font-bold shadow-md shadow-green-500/10">Confirm
+        Payment</button>
+    </div>
   </div>
+</div>
 }
